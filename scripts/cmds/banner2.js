@@ -5,7 +5,7 @@ module.exports = {
 	config: {
 		name: "banner2",
 		version: "1.0",
-		author: "cliff",
+		author: "Your Name",
 		countDown: 10,
 		role: 0,
 		shortDescription: "Create Genshin Impact banner",
@@ -18,7 +18,7 @@ module.exports = {
 
 	onStart: async function ({ message, args, event, api }) {
 		const [name, idCharacter] = args;
-
+    
 		if (!name || !idCharacter) {
 			return message.reply(`Please enter in the format:\n/bannerGenshin Name | Character ID`);
 		}

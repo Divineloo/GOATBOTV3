@@ -3,7 +3,7 @@ const axios = require("axios");
 module.exports = {
 config: {
 		name: "blood",
-		version: "1.0",
+    version: "1.0",
 		author: "Samir",
 		countDown: 5,
 		role: 0,
@@ -11,8 +11,8 @@ config: {
 		longDescription: "Write Bloody Text Through textpro.me",
 		category: "textpro",
 		guide: {
-			en: "{p}{n} query",
-		}
+      en: "{p}{n} query",
+    }
 	},
 
  onStart: async function ({ api, event, args, message }) {

@@ -19,7 +19,7 @@ module.exports = {
 	},
 
 	onStart: async function ({ message, args, event, api }) {
-		const info = args.join(" ");
+    const info = args.join(" ");
 		if (!info){
 			return message.reply(`Generating Banner!`);
 		}else {
@@ -27,12 +27,12 @@ module.exports = {
 		const name = msg[0];
 		const slogan = msg[1];
 		const charid = msg[2];
-			const img = (`https://goatbot.tk/api/anime/banner-genshin?apikey=nMWvMoATfP6L42BW0GFgm47LhGEI10v6&name=${name}&slogan=${slogan}+&idCharacter=${charid}`)
+      const img = (`https://goatbot.tk/api/anime/banner-genshin?apikey=nMWvMoATfP6L42BW0GFgm47LhGEI10v6&name=${name}&slogan=${slogan}+&idCharacter=${charid}`)
 			const form = {
 				body: ` Here's Your Banner❤️ `
 			};
 				form.attachment = []
 				form.attachment[0] = await global.utils.getStreamFromURL(img);
 			message.reply(form);
-				}
+			  }
 }};
