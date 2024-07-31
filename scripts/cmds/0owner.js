@@ -5,7 +5,7 @@ const path = require('path');
 module.exports = {
 config: {
   name: "owner",
-  aurthor:"Tokodori",// Convert By Goatbot Tokodori 
+  aurthor:"dave",// Convert By Goatbot Tokodori 
    role: 0,
   shortDescription: " ",
   longDescription: "",
@@ -16,12 +16,12 @@ config: {
   onStart: async function ({ api, event }) {
   try {
     const ownerInfo = {
-      name: 'Yazky Ai',
+      name: 'Dave',
       gender: 'Male',
       age: 'Unknown',
       height: 'Unknown',
-      facebookLink: 'stalk moko mwa',
-      nick: 'Yazky'
+      facebookLink: 'check bot bio',
+      nick: 'dev'
     };
 
     const bold = 'https://i.imgur.com/DDO686J.mp4'; // Replace with your Google Drive videoid link https://drive.google.com/uc?export=download&id=here put your video id
