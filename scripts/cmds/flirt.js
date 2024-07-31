@@ -2,12 +2,12 @@
 module.exports = {
 	config: {
 		name: "flirt",
-		aliases: ["baby"],
+    aliases: ["baby"],
 		version: "1.0",
 		author: "otineeeeeyyyyyyyyyyyy",
 		role: 0,
 		category: "fun",
-		shortDescription: "Flirt With Lines",
+    shortDescription: "Flirt With Lines",
 		longDescription: "",
 		guide: {
 			vi: "Not Available",
@@ -15,13 +15,13 @@ module.exports = {
 		} 
 	},
 
-	onStart: async function ({ api, event, userData, args }) {
-			var mention = Object.keys(event.mentions)[0];
-		if(!mention) return api.sendMessage("Need to tag 1 friend you want to fuck", event.threadID);
+  onStart: async function ({ api, event, userData, args }) {
+      var mention = Object.keys(event.mentions)[0];
+    if(!mention) return api.sendMessage("Need to tag 1 friend you want to fuck", event.threadID);
  let name =  event.mentions[mention];
-		var arraytag = []; 
-				arraytag.push({id: mention, tag: name});
-		var a = function (a) { api.sendMessage(a, event.threadID); }
+    var arraytag = []; 
+        arraytag.push({id: mention, tag: name});
+    var a = function (a) { api.sendMessage(a, event.threadID); }
 a("Sed why do you use this command <3 :3");
 setTimeout(() => {a({body: "Hi there :3 :3" + " " + name, mentions: arraytag})}, 2000);
 setTimeout(() => {a({body: "Your breasts are so pretty, you're pretty too" + " " + name, mentions: arraytag})}, 3000);
@@ -57,5 +57,5 @@ setTimeout(() => {a("Let me hardly fuck you")} , 32000);
 setTimeout(() => {a("Suss! don't cry someone is listening us")} , 33000);
 setTimeout(() => {a("Thank for having fuck with me")} , 34000);
 setTimeout(() => {a("Babe! i will come tommorow to fuck u again.. Okeyy!! :)")} , 35000);
-	}
+  }
 };
