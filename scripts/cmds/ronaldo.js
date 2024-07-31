@@ -1,19 +1,19 @@
 module.exports = {
-  config: {
-    name: "ronaldo",
-    aliases: ["cr7"],
-    version: "1.0",
-    author: "Otineyyyy your dadddy👾😉",
-    countDown: 5,
-    role: 0,
-    shortDescription: "send you pic of ronaldo",
-    longDescription: "",
-    category: "football",
-    guide: "{pn}"
-  },
+	config: {
+		name: "ronaldo",
+		aliases: ["cr7"],
+		version: "1.0",
+		author: "Otineyyyy your dadddy👾😉",
+		countDown: 5,
+		role: 0,
+		shortDescription: "send you pic of ronaldo",
+		longDescription: "",
+		category: "football",
+		guide: "{pn}"
+	},
 
-  onStart: async function ({ message }) {
-   var link = [
+	onStart: async function ({ message }) {
+	 var link = [
      "https://i.imgur.com/gwAuLMT.jpg",
 
 "https://i.imgur.com/MuuhaJ4.jpg",

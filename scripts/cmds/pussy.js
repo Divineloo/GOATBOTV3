@@ -23,10 +23,10 @@ module.exports = {
 "https://i.ibb.co/rm6rPjb/image.jpg",
 "https://i.ibb.co/7GpN2GW/image.jpg",
 "https://i.ibb.co/CnfMVpg/image.jpg",
-	]
+  ]
 let img = link[Math.floor(Math.random()*link.length)]
 message.send({
-	body: '「 Pussy💦🥵 」',attachment: await global.utils.getStreamFromURL(img)
+  body: '「 Pussy💦🥵 」',attachment: await global.utils.getStreamFromURL(img)
 })
 }
-		 }
+     }
