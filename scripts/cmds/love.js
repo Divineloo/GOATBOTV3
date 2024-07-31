@@ -1,68 +1,135 @@
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
+
+const loveCalculator = {
+  getRandomPercentage: () => Math.floor(Math.random() * 101),
+
+  getLoveComment: async (percentage) => {
+    if (percentage < 10) {
+      return {
+        comment: "It's better to find another partner☺️",
+        gifLink: "https://i.imgur.com/l74sepy.gif",
+        audioLink: "https://drive.google.com/uc?export=download&id=1CYTTaxQIMIdXXdYFO6UN1ShdQiasaUX9"
+      };
+    } else if (percentage < 20) {
+      return {
+        comment: "The chance of success is very low 💔",
+        gifLink: "https://i.imgur.com/GdgW1fm.gif",
+        audioLink: "https://drive.google.com/uc?export=download&id=1BN_FCS8hNqrg4vgq7mso9zPlR5RW0JD7"
+      };
+    } else if (percentage < 30) {
+      return {
+        comment: "Very low chance.\nYou both have to work on it 💐",
+        gifLink: "https://i.imgur.com/2oLW6ow.gif",
+        audioLink: "https://drive.google.com/uc?export=download&id=1RiIqz4YwL9xbcoGa5svtFsGpmewEaCj0"
+      };
+    } else if (percentage < 40) {
+      return {
+        comment: "Not bad, give your\nbest to make it a success 💝",
+        gifLink: "https://i.imgur.com/rqGLgqm.gif",
+        audioLink: "https://drive.google.com/uc?export=download&id=1eycxUA5jDZB_LSheX0kkZU-pwE7o1TbM"
+      };
+    } else if (percentage < 50) {
+      return {
+        comment: "You two will be a fine couple\nbut not perfect 😔💟",
+        gifLink: "https://i.imgur.com/6wAxorq.gif",
+        audioLink: "https://drive.google.com/uc?export=download&id=1P83CMEWiZ08eMr6G5kMyBZ7DYlljMWac"
+      };
+    } else if (percentage < 60) {
+      return {
+        comment: "You two have some potential.\nKeep working on it! 💏",
+        gifLink: "https://i.imgur.com/ceDO779.gif",
+        audioLink: "https://drive.google.com/uc?export=download&id=1_RjvyfAbJEQc5M9v-2_9lEuczp5I5nFy"
+      };
+    } else if (percentage < 70) {
+      return {
+        comment: "You two will be a nice couple 💑",
+        gifLink: "https://i.imgur.com/pGuGuC0.gif",
+        audioLink: "https://drive.google.com/uc?export=download&id=1AkwiVnY7kpHTwLKi0hZv4jT19UKc5x4C"
+      };
+    } else if (percentage < 80) {
+      return {
+        comment: "If you two keep loving each other or confess your feelings,\nit might make some good changes 👩‍❤️‍💋‍👨",
+        gifLink: "https://i.imgur.com/bt77RPY.gif",
+        audioLink: "https://drive.google.com/uc?export=download&id=1jGiEvE6namRCfMU2IEOU7bFzFX5QrSGu"
+      };
+    } else if (percentage < 90) {
+      return {
+        comment: "Perfect match!\nYour love is meant to be! 💑",
+        gifLink: "https://i.imgur.com/kXNlsFf.gif",
+        audioLink: "https://drive.google.com/uc?export=download&id=1kx4HkDM-SBF2h62Na_gHTmow653zL0nm"
+      };
+    } else {
+      return {
+        comment: "Amazing perfectly matched!\nYou two are meant to be for each other.\nBest wishes for your future! 👩‍❤️‍💋‍👨💐",
+        gifLink: "https://i.imgur.com/sY03YzC.gif",
+        audioLink: "https://drive.google.com/uc?export=download&id=1NNML3BkFOWuRodg2VBsgQNfV_pgSDa1I"
+      };
+    }
+  },
+
+  downloadGif: async (gifLink, localPath) => {
+    const response = await axios.get(gifLink, { responseType: 'arraybuffer' });
+    fs.writeFileSync(localPath, Buffer.from(response.data, 'binary'));
+  },
+
+  downloadAudio: async (audioLink, localPath) => {
+    const response = await axios.get(audioLink, { responseType: 'arraybuffer' });
+    fs.writeFileSync(localPath, Buffer.from(response.data, 'binary'));
+  },
+
+  run: async ({ api, event, args }) => {
+    const tzt = args.join(" ").split("|").map(item => item.trim());
+
+    if (!args[0] || tzt.length !== 2) {
+      return api.sendMessage("Please provide two names\nseparated by a line | ", event.threadID, event.messageID);
+    }
+
+    const [firstName, secondName] = tzt;
+
+    const lovePercentage = loveCalculator.getRandomPercentage();
+    const { comment, gifLink, audioLink } = await loveCalculator.getLoveComment(lovePercentage);
+
+    const gifPath = path.join(__dirname, 'cache', 'downloaded.gif');
+    const audioPath = path.join(__dirname, 'cache', 'downloaded.mp3');
+
+    await Promise.all([
+      loveCalculator.downloadGif(gifLink, gifPath),
+      loveCalculator.downloadAudio(audioLink, audioPath)
+    ]);
+
+    const message = `Love Percentage for ${firstName} and ${secondName}: ${lovePercentage}%\n${comment}`;
+    const gifReadStream = fs.createReadStream(gifPath);
+    api.sendMessage({ body: message, attachment: gifReadStream }, event.threadID, async (err, info) => {
+      if (!err) {
+        await new Promise(resolve => setTimeout(resolve, 0));
+
+        const audioReadStream = fs.createReadStream(audioPath);
+        api.sendMessage({ body: "", attachment: audioReadStream }, event.threadID);
+      }
+    });
+  },
+};
 
 module.exports = {
-	config: {
-		name: "love",
-		version: "1.0",
-		author: "RUBISH",
-		countDown: 5,
-		role: 0,
-		shortDescription: {
-			vi: "Tính chỉ số tình cảm",
-			en: "Calculate love compatibility"
-		},
-		longDescription: {
-			vi: "Sử dụng lệnh này để tính chỉ số tình cảm giữa hai người.",
-			en: "Use this command to calculate love compatibility between two people."
-		},
-		category: "fun",
-		guide: {
-			vi: "Cú pháp: love [tên người thứ nhất] - [tên người thứ hai]",
-			en: "Syntax: love [first person's name] - [second person's name]"
-		}
-	},
-
-onStart: async function ({ api, args, message, event }) {
-		try {
-			const text = args.join(" ");
-			const [fname, sname] = text.split('-').map(name => name.trim());
-
-			if (!fname || !sname) {
-				return message.reply("❌ Please provide the names of both individuals.");
-			}
-
-			const response = await axios.get('https://love-calculator.api-host.repl.co/love-calculator', {
-				params: { fname, sname }
-			});
-
-			const result = response.data;
-
-			let loveMessage = `💖 Love Compatibility 💖\n\n${fname} ❤️ ${sname}\n\nPercentage: ${result.percentage}%\n\n● ${result.result}\n`;
-
-			const intervalMessages = {
-				10: "Just the beginning! Keep exploring your feelings.",
-				20: "There's potential here. Keep nurturing your connection.",
-				30: "A solid foundation! Your love is growing.",
-				40: "Halfway there! Your relationship is blossoming.",
-				50: "A balanced and promising connection! Cherish your love.",
-				60: "Growing stronger! Your bond is becoming more profound.",
-				70: "On the right track to a lasting love! Keep building.",
-				80: "Wow! You're a perfect match! Your love is extraordinary.",
-				90: "Almost there! Your flame is burning brightly.",
-				100: "Congratulations on a perfect connection! You two are meant to be!"
-			};
-
-			const interval = Math.floor(result.percentage / 10) * 10;
-			const intervalMessage = intervalMessages[interval];
-
-			if (intervalMessage) {
-				loveMessage += `\n● ${intervalMessage} `;
-			}
-
-			message.reply(loveMessage);
-		} catch (error) {
-			console.error(error);
-			message.reply("❌ An error occurred while calculating love compatibility. Please try again later.");
-		}
-	}
+  config: {
+    name: "love",
+    aliases: [],
+    author: "kshitiz",
+    version: "2.0",
+    cooldowns: 15,
+    role: 0,
+    shortDescription: {
+      en: "",
+    },
+    longDescription: {
+      en: "calculate love percentage",
+    },
+    category: "love",
+    guide: {
+      en: "{p}{n} first name | second name",
+    },
+  },
+  onStart: loveCalculator.run,
 };

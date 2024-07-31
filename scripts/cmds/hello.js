@@ -31,7 +31,7 @@ module.exports = {
  } // English language
  },
 
-
+ 
  onStart: async function ({ api, args, message, event, threadsData, usersData, dashBoardData, globalData, threadModel, userModel, dashBoardModel, globalModel, role, commandName, getLang }) {
  message.reply("hello my friend ✨🙂💔")
 
